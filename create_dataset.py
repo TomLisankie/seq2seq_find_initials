@@ -2,6 +2,9 @@ from faker import Faker
 import csv
 from random import random
 
+affixes = set(['Mrs.', 'Ms.', 'Miss', 'Dr.', 'Mr.', 'MD', 'DDS', 'PhD', 'DVM', 'Jr.', 'Sr.', 'I', 'II', 'III',
+'IV', 'V'])
+
 """Gets initials of a human name
 """
 def get_initials(name):
@@ -29,10 +32,20 @@ def alter_formatting(name):
             new_char_list.append(char)
     return "".join(new_char_list)
 
+def remove_affixes(name):
+    fml = name.split(" ")  #first, middle, last names
+    cleaned_list = []
+    for word in fml:
+        if word not in affixes:
+            cleaned_list.append(word)
+            cleaned_list.append(" ")
+    return "".join(cleaned_list).strip()
+
 fake = Faker()
 names = {}
 for i in range(1000000):
-    fake_name = alter_formatting(fake.name())
+    fake_name = remove_affixes(fake.name())
+    fake_name = alter_formatting(fake_name)
     names[fake_name] = get_initials(fake_name)
 
 data_path = "data/"
