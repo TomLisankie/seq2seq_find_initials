@@ -29,7 +29,7 @@ def remove_affixes(name):
 
 fake = Faker()
 names = {}
-for i in range(1000000):
+for i in range(3000000):
     fake_name = remove_affixes(fake.name())
     fake_name = alter_formatting(fake_name)
     names[fake_name] = get_initials(fake_name)
